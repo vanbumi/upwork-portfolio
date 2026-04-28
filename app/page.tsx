@@ -2,13 +2,15 @@
 
 import { useState } from 'react'
 import { Header } from '@/components/layouts/Header'
+import Footer from '@/components/layouts/Footer'  // ← tanpa kurung kurawal
 import { 
   HeroCenter, 
   HeroLeft, 
   HeroWithImage, 
   FeaturesGrid, 
   PricingSimple,
-  Testimonials
+  Testimonials,
+  Contact
 } from '@/components/sections'
 import { HeroSwitcher } from '@/components/ui/HeroSwitcher'
 
@@ -71,7 +73,7 @@ export default function Home() {
     },
   ]
 
-  // 👈 TAMBAHKAN DATA TESTIMONIALS
+  // Data Testimonials
   const testimonialsData = [
     {
       name: "Sarah Johnson",
@@ -100,7 +102,7 @@ export default function Home() {
     <main>
       <Header />
       
-      {/* Hero Section - Conditional Rendering based on activeHero */}
+      {/* Hero Section */}
       {activeHero === 'center' && (
         <HeroCenter 
           title="Build Fast. Convert Better."
@@ -143,19 +145,25 @@ export default function Home() {
         id="pricing"
       />
 
-      <div className="text-center mt-1 text-gray-500 text-sm">
-        <p>✨ Maintenance plans available from $49/month — includes hosting, backups, and content updates.</p>
-      </div>
-
       {/* Testimonials Section */}
       <Testimonials 
         title="What Our Clients Say"
         subtitle="Trusted by businesses worldwide"
         testimonials={testimonialsData}
       />
+
+      {/* Contact Section */}
+      <Contact 
+        id="contact"
+        title="Let's Work Together"
+        subtitle="Have a project in mind? Let's discuss how I can help you."
+      />
       
-      {/* Hero Switcher - Floating Button */}
+      {/* Hero Switcher */}
       <HeroSwitcher activeHero={activeHero} onSwitch={setActiveHero} />
+      
+      {/* Footer */}
+      <Footer />
     </main>
   )
 }

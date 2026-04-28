@@ -6,3 +6,4 @@ export { default as FeaturesCards } from './FeaturesCards'
 export { default as FeaturesIconGrid } from './FeaturesIconGrid'
 export { default as PricingSimple } from './PricingSimple'
 export { default as Testimonials } from './Testimonials'   // ← HARUS seperti ini     
+export { default as Contact } from './Contact'
