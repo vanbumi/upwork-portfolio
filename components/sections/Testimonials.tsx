@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Section } from '../ui/Section'
+import Image from 'next/image'
 
 type Testimonial = {
   name: string
@@ -58,16 +59,18 @@ const Testimonials = ({ title, subtitle, testimonials }: TestimonialsProps) => {
 
             {/* Content */}
             <p className="text-gray-600 mb-6 italic">
-              "{testimonial.content}"
+              &quot;{testimonial.content}&quot;
             </p>
 
             {/* Author */}
             <div className="flex items-center gap-3">
               {testimonial.avatar ? (
-                <img
-                  src={testimonial.avatar}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover"
+                <Image
+                    src={testimonial.avatar}
+                    alt={testimonial.name}
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 rounded-full object-cover"
                 />
               ) : (
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">

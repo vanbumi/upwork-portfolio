@@ -11,7 +11,6 @@ import {
   Testimonials
 } from '@/components/sections'
 import { HeroSwitcher } from '@/components/ui/HeroSwitcher'
-import { Assistant } from 'next/font/google'
 
 export default function Home() {
   const [activeHero, setActiveHero] = useState<'center' | 'left' | 'image'>('center')
@@ -31,27 +30,27 @@ export default function Home() {
     {
       name: "Starter",
       price: "$397",
-      description: "Perfect for startups & small businesses",
+      description: "One-time payment. Perfect for startups.",
       features: [
         "1 Landing Page", 
         "Mobile Responsive", 
         "SEO Optimized", 
         "Contact Form", 
-        "3 Business Days Delivery"
+        "3 Days Delivery"
       ],
       buttonText: "Start Project",
     },
     {
       name: "Professional", 
       price: "$797",
-      description: "Best for growing companies",
+      description: "One-time payment. Best for growing companies.",
       features: [
-        "Up to 3 Landing Pages",
+        "Up to 3 Pages",
         "Advanced SEO", 
         "Analytics Setup", 
         "5 Days Support",
-        "7 Business Days Delivery",
-        "Content Upload Assistance"
+        "7 Days Delivery",
+        "Content Upload"
       ],
       buttonText: "Choose Plan",
       popular: true,
@@ -59,20 +58,21 @@ export default function Home() {
     {
       name: "Enterprise",
       price: "$1,497",
-      description: "For large organizations & agencies",
+      description: "One-time payment. For large organizations.",
       features: [
         "Unlimited Pages",
         "Custom Design", 
         "Priority Support", 
         "CMS Integration",
-        "2 Business Days Delivery",
-        "1 Year Maintenance"
+        "14 Days Delivery",
+        "1 Year Hosting"
       ],
       buttonText: "Contact Us",
     },
   ]
 
-  const testimonials = [
+  // 👈 TAMBAHKAN DATA TESTIMONIALS
+  const testimonialsData = [
     {
       name: "Sarah Johnson",
       role: "Founder",
@@ -143,11 +143,15 @@ export default function Home() {
         id="pricing"
       />
 
-      {/* 👈 TAMBAHKAN INI */}
+      <div className="text-center mt-1 text-gray-500 text-sm">
+        <p>✨ Maintenance plans available from $49/month — includes hosting, backups, and content updates.</p>
+      </div>
+
+      {/* Testimonials Section */}
       <Testimonials 
         title="What Our Clients Say"
         subtitle="Trusted by businesses worldwide"
-        testimonials={testimonials}
+        testimonials={testimonialsData}
       />
       
       {/* Hero Switcher - Floating Button */}

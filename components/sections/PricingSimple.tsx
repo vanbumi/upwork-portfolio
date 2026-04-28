@@ -56,8 +56,8 @@ const PricingSimple = ({ title, subtitle, tiers, id }: PricingSimpleProps) => {
             <p className="text-gray-600 mb-4">{tier.description}</p>
             
             <div className="mb-6">
-              <span className="text-4xl font-bold text-gray-900">{tier.price}</span>
-              {tier.price !== 'Custom' && <span className="text-gray-500">/month</span>}
+                <span className="text-4xl font-bold text-gray-900">{tier.price}</span>
+                <span className="text-gray-500 text-sm block">one-time payment</span>
             </div>
             
             <ul className="space-y-3 mb-8">
