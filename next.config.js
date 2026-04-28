@@ -16,6 +16,8 @@ const nextConfig = {
       },
     ],
   },
+  // Tambahkan untuk dev dari perangkat lain
+  allowedDevOrigins: ['192.168.0.*', 'localhost', '127.0.0.1'],
 }
 
 module.exports = nextConfig

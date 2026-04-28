@@ -2,44 +2,79 @@
 
 import { useState } from 'react'
 import { Header } from '@/components/layouts/Header'
-import { HeroCenter, HeroLeft, HeroWithImage } from '@/components/sections'
+import { HeroCenter, FeaturesGrid, FeaturesCards, FeaturesIconGrid } from '@/components/sections'
 import { HeroSwitcher } from '@/components/ui/HeroSwitcher'
 
 export default function Home() {
   const [activeHero, setActiveHero] = useState<'center' | 'left' | 'image'>('center')
 
+  // Sample features data
+  const sampleFeatures = [
+    {
+      title: "Fast Performance",
+      description: "Lightning fast load times with Next.js 15 and automatic optimization",
+      icon: "⚡"
+    },
+    {
+      title: "SEO Optimized",
+      description: "Built with best practices for maximum search engine visibility",
+      icon: "📈"
+    },
+    {
+      title: "Mobile First",
+      description: "Fully responsive design that looks great on any device",
+      icon: "📱"
+    },
+    {
+      title: "TypeScript Ready",
+      description: "Type-safe code for better developer experience",
+      icon: "🔷"
+    },
+    {
+      title: "Easy Customization",
+      description: "Modular components that are easy to modify and extend",
+      icon: "🎨"
+    },
+    {
+      title: "Analytics Ready",
+      description: "Ready to integrate with Google Analytics, Mixpanel, etc",
+      icon: "📊"
+    }
+  ]
+
   return (
     <main>
       <Header />
       
-      {/* Render active hero based on state */}
-      {activeHero === 'center' && (
-        <HeroCenter 
-          title="Build Fast. Convert Better."
-          subtitle="Professional landing pages built with Next.js 15 and Tailwind CSS. Blazing fast and SEO optimized."
-          ctaText="Start Building"
-          secondaryCtaText="View Pricing"
-        />
-      )}
+      <HeroCenter 
+        title="Build Fast. Convert Better."
+        subtitle="Professional landing pages built with Next.js 15 and Tailwind CSS. Blazing fast and SEO optimized."
+        ctaText="Start Building"
+        secondaryCtaText="View Pricing"
+      />
       
-      {activeHero === 'left' && (
-        <HeroLeft 
-          title="Landing Pages That Actually Convert"
-          subtitle="Stop wasting time on complex setups. Get a beautiful, high-converting landing page in days, not weeks."
-          ctaText="Get Started Now"
-          badge="🔥 Limited Offer"
-        />
-      )}
+      {/* Test Features Grid */}
+      <FeaturesGrid 
+        title="Powerful Features"
+        subtitle="Everything you need to create high-converting landing pages"
+        features={sampleFeatures}
+      />
       
-      {activeHero === 'image' && (
-        <HeroWithImage 
-          title="Beautiful Landing Pages Made Simple"
-          subtitle="Launch your product faster with our professional templates. Used by 1000+ businesses worldwide."
-          ctaText="View Templates"  
-        />
-      )}
+      {/* Uncomment untuk test variant lain */}
+      {/*
+      <FeaturesCards 
+        title="Why Choose Us"
+        subtitle="We provide the best tools for your business"
+        features={sampleFeatures.map(f => ({ ...f, badge: "New" }))}
+      />
       
-      {/* Hero Switcher - floating button di bawah */}
+      <FeaturesIconGrid 
+        title="Key Benefits"
+        subtitle="Simple, fast, and effective"
+        features={sampleFeatures.slice(0, 4)}
+      />
+      */}
+      
       <HeroSwitcher activeHero={activeHero} onSwitch={setActiveHero} />
     </main>
   )
