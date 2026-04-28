@@ -16,10 +16,11 @@ const HeroCenter = ({
   title,
   subtitle,
   ctaText = 'Get Started',
-  ctaLink = '#',
+  ctaLink = '#features',
   secondaryCtaText,
-  secondaryCtaLink = '#',
+  secondaryCtaLink = '#pricing',
 }: HeroCenterProps) => {
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <div className="absolute inset-0 opacity-30">
@@ -52,11 +53,15 @@ const HeroCenter = ({
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex gap-4 justify-center flex-wrap"
           >
-            <Button variant="primary" href={ctaLink}>
+            <Button variant="primary" href={ctaLink}> 
               {ctaText}
             </Button>
+            
             {secondaryCtaText && (
-              <Button variant="outline" href={secondaryCtaLink}>
+              <Button 
+                variant="outline" 
+                href={secondaryCtaLink}
+              >
                 {secondaryCtaText}
               </Button>
             )}

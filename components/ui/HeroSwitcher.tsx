@@ -7,10 +7,10 @@ type HeroSwitcherProps = {
 
 export const HeroSwitcher = ({ activeHero, onSwitch }: HeroSwitcherProps) => {
   const heroes = [
-    { id: 'center', name: 'Hero Center', icon: '🎯', description: 'SaaS, Digital Product' },
-    { id: 'left', name: 'Hero Left', icon: '📝', description: 'Agency, Consultant' },
-    { id: 'image', name: 'Hero With Image', icon: '🖼️', description: 'E-commerce, App' },
-  ] as const
+    { id: 'center' as const, name: 'Hero Center', icon: '🎯' },
+    { id: 'left' as const, name: 'Hero Left', icon: '📝' },
+    { id: 'image' as const, name: 'Hero With Image', icon: '🖼️' },
+  ]
 
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
@@ -20,22 +20,15 @@ export const HeroSwitcher = ({ activeHero, onSwitch }: HeroSwitcherProps) => {
             key={hero.id}
             onClick={() => onSwitch(hero.id)}
             className={`
-              px-5 py-3 rounded-xl transition-all duration-200 text-left
+              px-4 py-2 rounded-xl transition-all duration-200
               ${activeHero === hero.id 
-                ? 'bg-blue-600 text-white shadow-lg' 
-                : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                ? 'bg-blue-600 text-white shadow-md' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }
             `}
           >
-            <div className="flex items-center gap-2">
-              <span className="text-xl">{hero.icon}</span>
-              <div>
-                <div className="font-semibold text-sm">{hero.name}</div>
-                <div className={`text-xs ${activeHero === hero.id ? 'text-blue-100' : 'text-gray-500'}`}>
-                  {hero.description}
-                </div>
-              </div>
-            </div>
+            <span className="text-xl mr-2">{hero.icon}</span>
+            <span className="text-sm font-medium">{hero.name}</span>
           </button>
         ))}
       </div>

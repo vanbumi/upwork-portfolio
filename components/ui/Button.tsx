@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 type ButtonProps = {
   children: ReactNode
   variant?: 'primary' | 'secondary' | 'outline'
-  onClick?: () => void
+  onClick?: () => void  // ← SEDERHANAKAN: tidak pakai parameter event
   href?: string
   className?: string
 }
@@ -28,7 +28,7 @@ export const Button = ({
   
   if (href) {
     return (
-      <a href={href} className={styles}>
+      <a href={href} onClick={onClick} className={styles}>
         {children}
       </a>
     )

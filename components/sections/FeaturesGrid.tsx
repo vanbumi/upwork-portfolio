@@ -10,12 +10,13 @@ type Feature = {
 }
 
 type FeaturesGridProps = {
+    id?: string
     title: string
     subtitle: string
     features: Feature[]
 }
 
-const FeaturesGrid = ({ title, subtitle, features }: FeaturesGridProps) => {
+const FeaturesGrid = ({ id, title, subtitle, features }: FeaturesGridProps) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -32,7 +33,7 @@ const FeaturesGrid = ({ title, subtitle, features }: FeaturesGridProps) => {
   }
 
   return (
-    <Section background="white">
+    <Section background="white" id={id}>
       <div className="text-center mb-12 md:mb-16">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           {title}

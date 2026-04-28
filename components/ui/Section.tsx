@@ -5,12 +5,14 @@ type SectionProps = {
   children: ReactNode
   className?: string
   background?: 'white' | 'gray' | 'gradient'
+  id?: string
 }
 
 export const Section = ({ 
   children, 
   className = '', 
-  background = 'white' 
+  background = 'white',
+  id 
 }: SectionProps) => {
   
   const backgrounds = {
@@ -20,7 +22,7 @@ export const Section = ({
   }
   
   return (
-    <section className={`py-16 md:py-24 ${backgrounds[background]} ${className}`}>
+    <section id={id} className={`py-16 md:py-24 ${backgrounds[background]} ${className}`}>
       <Container>
         {children}
       </Container>
