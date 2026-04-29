@@ -6,6 +6,8 @@ type ButtonProps = {
   onClick?: () => void  // ← SEDERHANAKAN: tidak pakai parameter event
   href?: string
   className?: string
+  type?: 'button' | 'submit' | 'reset'  // 👈 TAMBAHKAN INI
+  disabled?: boolean  // 👈 TAMBAHKAN INI
 }
 
 export const Button = ({ 
@@ -13,7 +15,9 @@ export const Button = ({
   variant = 'primary', 
   onClick, 
   href,
-  className = '' 
+  className = '',
+  type = 'button',  // 👈 TAMBAHKAN INI (default value)
+  disabled = false  // 👈 TAMBAHKAN INI 
 }: ButtonProps) => {
   
   const baseStyles = "inline-block px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-105 cursor-pointer text-center"
