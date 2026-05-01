@@ -1,25 +1,92 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { Section } from '../ui/Section'
 import Image from 'next/image'
 
 type Testimonial = {
+  id: number
   name: string
   role: string
   company: string
   content: string
-  avatar?: string
   rating: number
+  avatar: string | null
 }
 
 type TestimonialsProps = {
   title: string
   subtitle?: string
-  testimonials: Testimonial[]
 }
 
-const Testimonials = ({ title, subtitle, testimonials }: TestimonialsProps) => {
+const Testimonials = ({ title, subtitle }: TestimonialsProps) => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch('/api/testimonials')
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const data = await response.json()
+        setTestimonials(data)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Gagal mengambil data testimonial')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTestimonials()
+  }, []) // Empty array = hanya dijalankan sekali saat komponen pertama kali dimuat
+
+  if (loading) {
+    return (
+      <Section background="gray">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{title}</h2>
+          {subtitle && <p className="text-xl text-gray-600 mb-8">{subtitle}</p>}
+          <div className="flex justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+          <p className="mt-4 text-gray-500">Loading testimonials...</p>
+        </div>
+      </Section>
+    )
+  }
+
+  if (error) {
+    return (
+      <Section background="gray">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{title}</h2>
+          {subtitle && <p className="text-xl text-gray-600 mb-8">{subtitle}</p>}
+          <div className="bg-red-100 text-red-700 p-4 rounded-lg">
+            Error loading testimonials: {error}
+          </div>
+        </div>
+      </Section>
+    )
+  }
+
+  if (testimonials.length === 0) {
+    return (
+      <Section background="gray">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{title}</h2>
+          {subtitle && <p className="text-xl text-gray-600 mb-8">{subtitle}</p>}
+          <p className="text-gray-500">No testimonials yet.</p>
+        </div>
+      </Section>
+    )
+  }
+
   return (
     <Section background="gray">
       <div className="text-center mb-12 md:mb-16">
@@ -34,16 +101,11 @@ const Testimonials = ({ title, subtitle, testimonials }: TestimonialsProps) => {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {testimonials.map((testimonial, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            viewport={{ once: true }}
+        {testimonials.map((testimonial) => (
+          <div
+            key={testimonial.id}
             className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow"
           >
-            {/* Rating Stars */}
             <div className="flex gap-1 mb-4">
               {[...Array(5)].map((_, i) => (
                 <svg
@@ -57,20 +119,18 @@ const Testimonials = ({ title, subtitle, testimonials }: TestimonialsProps) => {
               ))}
             </div>
 
-            {/* Content */}
             <p className="text-gray-600 mb-6 italic">
-              &quot;{testimonial.content}&quot;
+              "{testimonial.content}"
             </p>
 
-            {/* Author */}
             <div className="flex items-center gap-3">
               {testimonial.avatar ? (
                 <Image
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    width={48}
-                    height={48}
-                    className="w-12 h-12 rounded-full object-cover"
+                  src={testimonial.avatar}
+                  alt={testimonial.name}
+                  width={48}
+                  height={48}
+                  className="w-12 h-12 rounded-full object-cover"
                 />
               ) : (
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
@@ -84,7 +144,7 @@ const Testimonials = ({ title, subtitle, testimonials }: TestimonialsProps) => {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </Section>
