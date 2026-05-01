@@ -7,7 +7,7 @@ import { Button } from '../ui/Button'
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   
-  const menuItems = ['Features', 'Pricing', 'FAQ']
+  const menuItems = ['Features', 'Pricing', 'Blog', 'FAQ']
   
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
@@ -20,15 +20,18 @@ export const Header = () => {
           
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-8">
-            {menuItems.map((item) => (
-              <a 
-                key={item} 
-                href={`#${item.toLowerCase()}`}
-                className="text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                {item}
-              </a>
-            ))}
+            {menuItems.map((item) => {
+              const href = item === 'Blog' ? '/blog' : `#${item.toLowerCase()}`
+              return (
+                <a 
+                  key={item} 
+                  href={href}
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  {item}
+                </a>
+              )
+            })}
             <Button variant="primary">Get Started</Button>
           </nav>
           
