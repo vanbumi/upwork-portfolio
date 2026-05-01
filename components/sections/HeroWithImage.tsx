@@ -18,7 +18,8 @@ const HeroWithImage = ({
   subtitle,
   ctaText = 'Get Started',
   ctaLink = '#',
-  imageUrl = 'https://picsum.photos/id/1/600/400',
+  // imageUrl = 'https://picsum.photos/id/1/600/400',
+  imageUrl = '/hero-redigitalism.png',
   imageAlt = 'Hero image',
 }: HeroWithImageProps) => {
   return (

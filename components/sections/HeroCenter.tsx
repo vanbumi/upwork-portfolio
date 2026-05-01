@@ -23,10 +23,22 @@ const HeroCenter = ({
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <div className="absolute inset-0 opacity-30">
+      {/* <div className="absolute inset-0 opacity-30">
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-10 w-72 h-72 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div> */}
+
+      {/* OPSI 1: Gradient + Micro Pattern (Dot) - PALING KEREN */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+          backgroundSize: '32px 32px'
+        }} />
       </div>
+      
+      {/* Efek glow tambahan (opsional) */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl animate-pulse opacity-30" />
+      <div className="absolute bottom-20 right-10 w-72 h-72 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000 opacity-30" />
       
       <div className="container mx-auto px-4 text-center relative z-10">
         <motion.div

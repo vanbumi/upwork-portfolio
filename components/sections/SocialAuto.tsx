@@ -8,33 +8,33 @@ const SocialAuto = () => {
   const features = [
     {
       icon: "🔄",
-      title: "Auto-Post ke Instagram",
-      description: "Setiap blog post baru otomatis terbagi ke Instagram feed & story. Konten Anda selalu fresh."
+      title: "Auto-Post to Instagram",
+      description: "Every new blog post automatically shares to Instagram feed & story. Your content stays fresh."
     },
     {
       icon: "📱",
-      title: "Support Multi-Platform",
-      description: "Posting ke Instagram, LinkedIn, Twitter, dan Facebook — dari satu dashboard."
+      title: "Multi-Platform Support",
+      description: "Post to Instagram, LinkedIn, Twitter, and Facebook — all from one dashboard."
     },
     {
       icon: "⏰",
       title: "Schedule & Queue",
-      description: "Atur jadwal posting kapan saja. Sistem akan antri dan posting otomatis."
+      description: "Set your posting schedule. The system queues and posts automatically."
     },
     {
       icon: "📊",
-      title: "Analytics & Insight",
-      description: "Lihat performa post: reach, engagement, dan konversi dari setiap platform."
+      title: "Analytics & Insights",
+      description: "Track post performance: reach, engagement, and conversions across all platforms."
     },
     {
       icon: "🤖",
       title: "DM Automation",
-      description: "Auto-reply ke komentar/DM, capture leads, dan qualify prospek 24/7."
+      description: "Auto-reply to comments/DMs, capture leads, and qualify prospects 24/7."
     },
     {
       icon: "🔗",
-      title: "Custom Integration",
-      description: "Hubungkan dengan CRM, email marketing, atau tools lain via webhook."
+      title: "Custom Integrations",
+      description: "Connect with your CRM, email marketing, or other tools via webhook."
     }
   ]
 
@@ -44,10 +44,10 @@ const SocialAuto = () => {
       price: "$97",
       period: "one-time",
       features: [
-        "Setup RSS to Instagram",
-        "Auto-post ke 1 akun",
-        "1 bulan support",
-        "Dokumentasi cara pakai"
+        "RSS to Instagram setup",
+        "Auto-post to 1 account",
+        "1 month support",
+        "Setup documentation"
       ],
       buttonText: "Add to Package",
       popular: false
@@ -57,13 +57,13 @@ const SocialAuto = () => {
       price: "$197",
       period: "one-time",
       features: [
-        "Setup RSS ke 3 platform (IG, FB, X)",
-        "Auto-post ke 3 akun",
-        "3 bulan support",
+        "RSS to 3 platforms (IG, FB, X)",
+        "Auto-post to 3 accounts",
+        "3 months support",
         "Queue & scheduling",
         "Analytics dashboard"
       ],
-      buttonText: "Recommended",
+      buttonText: "Most Popular",
       popular: true
     },
     {
@@ -71,10 +71,10 @@ const SocialAuto = () => {
       price: "$49",
       period: "monthly",
       features: [
-        "Semua fitur Pro",
-        "Kami kelola posting",
+        "All Pro features",
+        "We manage your posts",
         "Content curation",
-        "Weekly report",
+        "Weekly reports",
         "24/7 support"
       ],
       buttonText: "Contact Us",
@@ -98,7 +98,7 @@ const SocialAuto = () => {
             Social Media Automation
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Ubah blog menjadi mesin leads otomatis. Posting ke Instagram, LinkedIn, dan Twitter — tanpa sentuh HP.
+            Turn your blog into an automated lead generation machine. Post to Instagram, LinkedIn, and Twitter — without touching your phone.
           </p>
         </motion.div>
       </div>
@@ -156,10 +156,10 @@ const SocialAuto = () => {
             <ul className="space-y-3 mb-8">
               {tier.features.map((feature, i) => (
                 <li key={i} className="flex items-center gap-2 text-gray-600">
-                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  {feature}
+                  <span className="text-sm">{feature}</span>
                 </li>
               ))}
             </ul>

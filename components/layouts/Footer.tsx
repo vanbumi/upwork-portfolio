@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="col-span-1">
             <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
-              YourBrand
+              Refactor Digitalism
             </h3>
             <p className="text-gray-400 text-sm">
               Building high-converting landing pages for businesses worldwide.
@@ -53,13 +53,13 @@ const Footer = () => {
           <div className="col-span-1">
             <h4 className="font-semibold mb-4">Contact</h4>
             <p className="text-gray-400 text-sm">
-              Email: hello@yourbrand.com
+              Email: hello@redigitalism.com
             </p>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-          © {currentYear} YourBrand. All rights reserved.
+          © {currentYear} Refactor Digitalism. All rights reserved.
         </div>
       </Container>
     </footer>
