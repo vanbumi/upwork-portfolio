@@ -74,29 +74,29 @@ export default function Home() {
   ]
 
   // Data Testimonials
-  const testimonialsData = [
-    {
-      name: "Sarah Johnson",
-      role: "Founder",
-      company: "TechStart",
-      content: "The landing page converted 40% better than our old one. Amazing work!",
-      rating: 5
-    },
-    {
-      name: "Michael Chen",
-      role: "Marketing Director",
-      company: "GrowthLabs",
-      content: "Professional, fast, and SEO optimized. Our organic traffic doubled.",
-      rating: 5
-    },
-    {
-      name: "Emma Williams",
-      role: "CEO",
-      company: "CreativeStudio",
-      content: "Best investment for our brand. The team understood exactly what we needed.",
-      rating: 5
-    }
-  ]
+  // const testimonialsData = [
+  //   {
+  //     name: "Sarah Johnson",
+  //     role: "Founder",
+  //     company: "TechStart",
+  //     content: "The landing page converted 40% better than our old one. Amazing work!",
+  //     rating: 5
+  //   },
+  //   {
+  //     name: "Michael Chen",
+  //     role: "Marketing Director",
+  //     company: "GrowthLabs",
+  //     content: "Professional, fast, and SEO optimized. Our organic traffic doubled.",
+  //     rating: 5
+  //   },
+  //   {
+  //     name: "Emma Williams",
+  //     role: "CEO",
+  //     company: "CreativeStudio",
+  //     content: "Best investment for our brand. The team understood exactly what we needed.",
+  //     rating: 5
+  //   }
+  // ]
 
   return (
     <main>
@@ -149,7 +149,6 @@ export default function Home() {
       <Testimonials 
         title="What Our Clients Say"
         subtitle="Trusted by businesses worldwide"
-        testimonials={testimonialsData}
       />
 
       {/* Contact Section */}
