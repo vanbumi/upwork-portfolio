@@ -1,38 +1,55 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Container } from '../ui/Container'
 import { Button } from '../ui/Button'
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname() // Untuk tahu halaman mana yang aktif
   
-  const menuItems = ['Features', 'Pricing', 'Blog', 'FAQ']
+  // Definisikan menu dengan link yang benar
+  const menuItems = [
+    { name: 'Home', href: '/' },
+    { name: 'Features', href: '/#features' },
+    { name: 'Pricing', href: '/#pricing' },
+    { name: 'Blog', href: '/blog' },
+  ]
   
+  // Cek apakah link aktif (untuk styling)
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === '/'
+    if (href.startsWith('/#')) return pathname === '/' // Untuk anchor link di homepage
+    return pathname === href
+  }
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
       <Container>
         <div className="flex items-center justify-between py-4">
-          {/* Logo */}
-          <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Brand
-          </div>
+          {/* Logo - Link ke Home */}
+          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            YourBrand
+          </Link>
           
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-8">
-            {menuItems.map((item) => {
-              const href = item === 'Blog' ? '/blog' : `#${item.toLowerCase()}`
-              return (
-                <a 
-                  key={item} 
-                  href={href}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  {item}
-                </a>
-              )
-            })}
-            <Button variant="primary">Get Started</Button>
+            {menuItems.map((item) => (
+              <Link 
+                key={item.name} 
+                href={item.href}
+                className={`transition-colors ${
+                  isActive(item.href) 
+                    ? 'text-blue-600 font-semibold' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Button variant="primary" href="/#contact">Contact</Button>
           </nav>
           
           {/* Mobile Menu Button */}
@@ -50,21 +67,27 @@ export const Header = () => {
           </button>
         </div>
         
-        {/* Mobile Menu */}
+        {/* Mobile Menu (Dropdown) */}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-100">
             <div className="flex flex-col gap-4">
               {menuItems.map((item) => (
-                <a 
-                  key={item} 
-                  href={`#${item.toLowerCase()}`}
-                  className="text-gray-600 hover:text-gray-900 py-2"
+                <Link 
+                  key={item.name} 
+                  href={item.href}
+                  className={`py-2 transition-colors ${
+                    isActive(item.href) 
+                      ? 'text-blue-600 font-semibold' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {item}
-                </a>
+                  {item.name}
+                </Link>
               ))}
-              <Button variant="primary" className="text-center">Get Started</Button>
+              <Button variant="primary" href="/#contact" className="text-center">
+                Contact
+              </Button>
             </div>
           </div>
         )}
