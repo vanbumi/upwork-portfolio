@@ -15,6 +15,7 @@ export const Header = () => {
     { name: 'Home', href: '/' },
     { name: 'Features', href: '/#features' },
     { name: 'Pricing', href: '/#pricing' },
+    { name: 'Social Auto', href: '/#social-auto' },  // 👈 TAMBAHKAN
     { name: 'Blog', href: '/blog' },
   ]
   
@@ -31,7 +32,7 @@ export const Header = () => {
         <div className="flex items-center justify-between py-4">
           {/* Logo - Link ke Home */}
           <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            YourBrand
+            Digitalism Refactor
           </Link>
           
           {/* Desktop Menu */}

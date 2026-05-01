@@ -10,7 +10,8 @@ import {
   FeaturesGrid, 
   PricingSimple,
   Testimonials,
-  Contact
+  Contact,
+  SocialAuto      // 👈 TAMBAHKAN
 } from '@/components/sections'
 import { HeroSwitcher } from '@/components/ui/HeroSwitcher'
 
@@ -150,6 +151,9 @@ export default function Home() {
         title="What Our Clients Say"
         subtitle="Trusted by businesses worldwide"
       />
+
+      {/* 👈 TAMBAHKAN INI */}
+      <SocialAuto />
 
       {/* Contact Section */}
       <Contact 

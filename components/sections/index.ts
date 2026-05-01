@@ -7,3 +7,4 @@ export { default as FeaturesIconGrid } from './FeaturesIconGrid'
 export { default as PricingSimple } from './PricingSimple'
 export { default as Testimonials } from './Testimonials'   // ← HARUS seperti ini     
 export { default as Contact } from './Contact'
+export { default as SocialAuto } from './SocialAuto'
