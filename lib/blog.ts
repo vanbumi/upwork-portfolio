@@ -99,45 +99,94 @@ export async function getAllArticles(limit: number = 20): Promise<Article[]> {
 
 // Ambil 1 artikel berdasarkan slug (untuk halaman detail)
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  // Coba dari Dev.to dulu
-  const devtoRes = await fetch(`https://dev.to/api/articles?username=thepracticaldev&per_page=100`, {
-    next: { revalidate: 3600 }
-  })
-  
-  if (devtoRes.ok) {
+  try {
+    // Coba dari Dev.to dulu
+    const devtoRes = await fetch(`https://dev.to/api/articles?username=thepracticaldev&per_page=100`, {
+      next: { revalidate: 3600 }
+    })
+    
+    if (!devtoRes.ok) {
+      console.error(`Dev.to API responded with status ${devtoRes.status}`)
+      return null
+    }
+    
     const devtoArticles = await devtoRes.json()
     const devtoArticle = devtoArticles.find((a: any) => a.slug === slug)
     
     if (devtoArticle) {
-      // Ambil konten HTML untuk detail
-      const detailRes = await fetch(`https://dev.to/api/articles/${devtoArticle.id}`, {
-        next: { revalidate: 3600 }
-      })
-      const detail = await detailRes.json()
-      
-      return {
-        id: `devto-${devtoArticle.id}`,
-        title: devtoArticle.title,
-        description: devtoArticle.description,
-        slug: devtoArticle.slug,
-        url: devtoArticle.url,
-        cover_image: devtoArticle.cover_image,
-        published_at: devtoArticle.published_at,
-        tag_list: devtoArticle.tag_list,
-        user: {
-          name: devtoArticle.user.name,
-          username: devtoArticle.user.username,
-          profile_image: devtoArticle.user.profile_image
-        },
-        source: 'devto',
-        body_html: detail.body_html
+      try {
+        const detailRes = await fetch(`https://dev.to/api/articles/${devtoArticle.id}`, {
+          next: { revalidate: 3600 }
+        })
+        
+        if (!detailRes.ok) {
+          console.error(`Dev.to detail API responded with status ${detailRes.status}`)
+          // Return basic info tanpa body_html
+          return {
+            id: `devto-${devtoArticle.id}`,
+            title: devtoArticle.title,
+            description: devtoArticle.description,
+            slug: devtoArticle.slug,
+            url: devtoArticle.url,
+            cover_image: devtoArticle.cover_image,
+            published_at: devtoArticle.published_at,
+            tag_list: devtoArticle.tag_list,
+            user: {
+              name: devtoArticle.user.name,
+              username: devtoArticle.user.username,
+              profile_image: devtoArticle.user.profile_image
+            },
+            source: 'devto'
+          }
+        }
+        
+        const detail = await detailRes.json()
+        
+        return {
+          id: `devto-${devtoArticle.id}`,
+          title: devtoArticle.title,
+          description: devtoArticle.description,
+          slug: devtoArticle.slug,
+          url: devtoArticle.url,
+          cover_image: devtoArticle.cover_image,
+          published_at: devtoArticle.published_at,
+          tag_list: devtoArticle.tag_list,
+          user: {
+            name: devtoArticle.user.name,
+            username: devtoArticle.user.username,
+            profile_image: devtoArticle.user.profile_image
+          },
+          source: 'devto',
+          body_html: detail.body_html
+        }
+      } catch (detailError) {
+        console.error(`Failed to fetch detail for article ${devtoArticle.id}:`, detailError)
+        // Return basic info tanpa body_html
+        return {
+          id: `devto-${devtoArticle.id}`,
+          title: devtoArticle.title,
+          description: devtoArticle.description,
+          slug: devtoArticle.slug,
+          url: devtoArticle.url,
+          cover_image: devtoArticle.cover_image,
+          published_at: devtoArticle.published_at,
+          tag_list: devtoArticle.tag_list,
+          user: {
+            name: devtoArticle.user.name,
+            username: devtoArticle.user.username,
+            profile_image: devtoArticle.user.profile_image
+          },
+          source: 'devto'
+        }
       }
     }
+    
+    // Jika tidak ditemukan di Dev.to
+    return null
+  } catch (error) {
+    console.error(`Failed to fetch article for slug ${slug}:`, error)
+    return null
   }
-  
-  // Jika tidak ditemukan di Dev.to, coba dari Medium (simplifikasi)
-  // Untuk Medium, arahkan ke URL asli karena API terbatas
-  return null
 }
 
 // Generate static paths untuk semua artikel (opsional, untuk SSG)

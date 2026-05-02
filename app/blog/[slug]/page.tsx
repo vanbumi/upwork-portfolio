@@ -2,22 +2,27 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Header } from '@/components/layouts/Header'
 import { Container } from '@/components/ui/Container'
-import { getAllArticleSlugs, getArticleBySlug } from '@/lib/blog'
+import { getArticleBySlug } from '@/lib/blog'
 
-// Generate static paths untuk SSG + ISR
-export async function generateStaticParams() {
-  const slugs = await getAllArticleSlugs()
-  return slugs
-}
+// 👉 HAPUS generateStaticParams - tidak lagi prerender semua halaman saat build
+// Biarkan Next.js generate halaman saat pertama kali diakses (on-demand)
 
 // Halaman detail artikel dengan ISR (revalidate setiap 1 jam)
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  // 👇 WAJIB: await params karena Next.js 15 ke atas
   const { slug } = await params
   
-  const article = await getArticleBySlug(slug)
+  let article = null
+  let error = false
   
-  if (!article) {
+  try {
+    article = await getArticleBySlug(slug)
+  } catch (err) {
+    console.error(`Failed to fetch article for slug: ${slug}`, err)
+    error = true
+  }
+  
+  // Jika error atau artikel tidak ditemukan, tampilkan 404
+  if (error || !article) {
     notFound()
   }
   
@@ -34,7 +39,6 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     <main>
       <Header />
       <Container className="py-24 max-w-4xl">
-        {/* Back link */}
         <Link 
           href="/blog" 
           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8 transition-colors"
@@ -42,7 +46,6 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           ← Back to all articles
         </Link>
         
-        {/* Cover Image */}
         {article.cover_image && (
           <div className="relative w-full h-96 rounded-2xl overflow-hidden mb-8">
             <img 
@@ -53,7 +56,6 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           </div>
         )}
         
-        {/* Title & Meta */}
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
           {article.title}
         </h1>
@@ -77,7 +79,6 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           </span>
         </div>
         
-        {/* Article Content */}
         {article.body_html ? (
           <div 
             className="prose prose-lg max-w-none"
@@ -95,7 +96,6 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           </div>
         )}
         
-        {/* Tags */}
         {article.tag_list.length > 0 && (
           <div className="mt-12 pt-8 border-t border-gray-200">
             <h3 className="text-lg font-semibold mb-3">Tags:</h3>
@@ -116,5 +116,5 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   )
 }
 
-// ISR: revalidate setiap 1 jam
+// ISR: revalidate setiap 1 jam (halaman yang sudah di-cache akan diperbarui)
 export const revalidate = 3600
