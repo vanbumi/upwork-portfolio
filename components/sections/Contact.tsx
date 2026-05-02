@@ -2,15 +2,20 @@
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import emailjs from '@emailjs/browser'
 import { Section } from '../ui/Section'
 import { Button } from '../ui/Button'
 
-type FormData = {
-  name: string
-  email: string
-  message: string
-}
+// 👉 Schema validasi dengan Zod
+const contactSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters" }),
+})
+
+type ContactFormData = z.infer<typeof contactSchema>
 
 type ContactProps = {
   title: string
@@ -19,20 +24,20 @@ type ContactProps = {
 }
 
 const Contact = ({ title, subtitle, id }: ContactProps) => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+  })
+  
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [isError, setIsError] = useState(false)
 
-  // ================================================
-  // 👇 MASUKKAN KREDENSIAL EMAILJS ANDA DI BAWAH INI
-  // ================================================
+  // 👇 GANTI DENGAN DATA EMAILJS ANDA
   const EMAILJS_SERVICE_ID = 'service_b4an0a6'    // Ganti dengan Service ID Anda
   const EMAILJS_TEMPLATE_ID = 'template_32p6sp9'  // Ganti dengan Template ID Anda
-  const EMAILJS_PUBLIC_KEY = 'J7h3ENEWcHViRiaMj'     // Ganti dengan Public Key Anda
-  // ================================================
+  const EMAILJS_PUBLIC_KEY = 'J7h3ENEWcHViRiaMj'        // Ganti dengan Public Key Anda
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true)
     setIsError(false)
 
@@ -78,6 +83,7 @@ const Contact = ({ title, subtitle, id }: ContactProps) => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Name Field */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
               Name *
@@ -85,8 +91,10 @@ const Contact = ({ title, subtitle, id }: ContactProps) => {
             <input
               id="name"
               type="text"
-              {...register("name", { required: "Name is required" })}
-              className={`w-full px-4 py-3 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors`}
+              {...register("name")}
+              className={`w-full px-4 py-3 rounded-lg border ${
+                errors.name ? 'border-red-500' : 'border-gray-300'
+              } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors`}
               placeholder="Your name"
             />
             {errors.name && (
@@ -94,6 +102,7 @@ const Contact = ({ title, subtitle, id }: ContactProps) => {
             )}
           </div>
 
+          {/* Email Field */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email *
@@ -101,14 +110,10 @@ const Contact = ({ title, subtitle, id }: ContactProps) => {
             <input
               id="email"
               type="email"
-              {...register("email", { 
-                required: "Email is required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address"
-                }
-              })}
-              className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors`}
+              {...register("email")}
+              className={`w-full px-4 py-3 rounded-lg border ${
+                errors.email ? 'border-red-500' : 'border-gray-300'
+              } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors`}
               placeholder="your@email.com"
             />
             {errors.email && (
@@ -116,6 +121,7 @@ const Contact = ({ title, subtitle, id }: ContactProps) => {
             )}
           </div>
 
+          {/* Message Field */}
           <div>
             <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
               Message *
@@ -123,8 +129,10 @@ const Contact = ({ title, subtitle, id }: ContactProps) => {
             <textarea
               id="message"
               rows={5}
-              {...register("message", { required: "Message is required" })}
-              className={`w-full px-4 py-3 rounded-lg border ${errors.message ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors`}
+              {...register("message")}
+              className={`w-full px-4 py-3 rounded-lg border ${
+                errors.message ? 'border-red-500' : 'border-gray-300'
+              } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors`}
               placeholder="Tell me about your project..."
             />
             {errors.message && (
@@ -132,6 +140,7 @@ const Contact = ({ title, subtitle, id }: ContactProps) => {
             )}
           </div>
 
+          {/* Submit Button */}
           <Button 
             type="submit" 
             variant="primary" 
@@ -141,12 +150,14 @@ const Contact = ({ title, subtitle, id }: ContactProps) => {
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
 
+          {/* Success Message */}
           {isSuccess && (
             <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg text-center">
               <p className="text-green-700">✅ Thank you! I'll get back to you within 24 hours.</p>
             </div>
           )}
 
+          {/* Error Message */}
           {isError && (
             <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-center">
               <p className="text-red-700">❌ Failed to send message. Please email me directly at hello@yourbrand.com</p>
